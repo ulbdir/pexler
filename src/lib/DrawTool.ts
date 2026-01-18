@@ -1,5 +1,6 @@
 import type { Tool } from "./Tool";
 import { editorState } from "./EditorState.svelte";
+import { addColor } from "./Palette.svelte";
 
 export class DrawTool implements Tool {
 
@@ -20,13 +21,16 @@ export class DrawTool implements Tool {
 
     onMove(x: number, y: number): void {
         const ctx = editorState.image.getContext("2d");
-        ctx.clearRect(Math.floor(x), Math.floor(y), 1, 1);
-        ctx.fillStyle = editorState.drawingColor.toCssRgba();
-        ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1);
+        if (ctx) {
+            ctx.clearRect(Math.floor(x), Math.floor(y), 1, 1);
+            ctx.fillStyle = editorState.drawingColor.toCssRgba();
+            ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1);
+        }
     }
 
     onEndMove(x: number, y: number): void {
-
+        // Add the drawing color to the palette if not already present
+        addColor(editorState.drawingColor);
     }
 
     onHover(x: number, y: number): boolean {

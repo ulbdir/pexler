@@ -21,5 +21,11 @@
     "file-menu.new.width": "Width in pixel",
     "file-menu.new.height": "Height in pixel",
     "file-menu.load": "Load image",
-    "file-menu.save": "Save image"
+    "file-menu.save": "Save image",
+    "palette.save": "Save Palette",
+    "palette.load": "Load Palette",
+    "palette.saved": "Palette saved",
+    "palette.loaded": "Palette loaded",
+    "palette.error.load": "Failed to load palette",
+    "palette.error.invalid": "Invalid palette file"
 }

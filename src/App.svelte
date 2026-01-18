@@ -5,6 +5,7 @@
   import Menu from "./Menu.svelte";
   import LanguageChanger from "./LanguageChanger.svelte";
   import FileMenu from "./FileMenu.svelte";
+  import Toast from "./lib/Toast.svelte";
   import { editorState } from "./lib/EditorState.svelte.js";
 
   let loading = $state(isLoading);
@@ -42,4 +43,8 @@
     </div>
   </div>
 </main>
+
+<!-- Toast notifications -->
+<div id="toast-container"></div>
+
 {/if}
