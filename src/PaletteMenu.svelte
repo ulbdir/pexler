@@ -2,7 +2,7 @@
     import { _ } from "svelte-i18n";
 
     import { Color } from "./lib/Color";
-    import { palette, sortPalette, type SortOrder } from "./lib/Palette.svelte";
+    import { palette, sortPalette, generatePaletteFromImage, clearPalette, type SortOrder } from "./lib/Palette.svelte";
     import ColorButton from "./ColorButton.svelte";
     import ChooseColorButton from "./ChooseColorButton.svelte";
     import Toast from "./lib/Toast.svelte";
@@ -47,6 +47,18 @@
         sortPalette(order);
         closePaletteMenu();
         triggerToast($_("palette.sorted"), 'success');
+    }
+
+    function handleGenerateFromImage() {
+        closePaletteMenu();
+        const count = generatePaletteFromImage(editorState.image);
+        triggerToast($_("palette.generated", { values: { count } }), 'success');
+    }
+
+    function handleClearPalette() {
+        closePaletteMenu();
+        clearPalette();
+        triggerToast($_("palette.cleared"), 'success');
     }
 
     function handleSavePalette() {
@@ -221,7 +233,7 @@
 </script>
 
 <div
-    class="card card-xs card-border m-1 !p-4 overflow-hidden bg-base-100 border-base-300"
+    class="card card-xs card-border m-1 !p-4 bg-base-100 border-base-300"
 >
     <div class="card-body !m-0 !p-0">
         <div class="flex justify-between items-center m-0 p-0">
@@ -241,6 +253,9 @@
                     <li><button onclick={() => sortAndClose('saturation')}>{$_("palette.sort.saturated-to-muted")}</button></li>
                     <li><button onclick={() => sortAndClose('luminance')}>{$_("palette.sort.luminance")}</button></li>
                     <div class="divider my-1"></div>
+                    <li><button onclick={handleGenerateFromImage}>{$_("palette.generate-from-image")}</button></li>
+                    <div class="divider my-1"></div>
+                    <li><button onclick={handleClearPalette}>{$_("palette.clear")}</button></li>
                     <li><button onclick={handleLoadPalette}>{$_("palette.load")}</button></li>
                     <li><button onclick={handleSavePalette}>{$_("palette.save")}</button></li>
                 </ul>
