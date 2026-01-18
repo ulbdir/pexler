@@ -27,5 +27,11 @@
     "palette.saved": "Palette saved",
     "palette.loaded": "Palette loaded",
     "palette.error.load": "Failed to load palette",
-    "palette.error.invalid": "Invalid palette file"
+    "palette.error.invalid": "Invalid palette file",
+    "palette.sorted": "Palette sorted",
+    "palette.sort.title": "Sort",
+    "palette.sort.hue": "By Hue",
+    "palette.sort.light-to-dark": "Light to Dark",
+    "palette.sort.saturated-to-muted": "Saturated to Muted",
+    "palette.sort.luminance": "By Brightness"
 }

@@ -29,5 +29,11 @@
     "palette.saved": "Palette gespeichert",
     "palette.loaded": "Palette geladen",
     "palette.error.load": "Palette konnte nicht geladen werden",
-    "palette.error.invalid": "Ungültige Palette-Datei"
+    "palette.error.invalid": "Ungültige Palette-Datei",
+    "palette.sorted": "Palette sortiert",
+    "palette.sort.title": "Sortieren",
+    "palette.sort.hue": "Nach Farbton",
+    "palette.sort.light-to-dark": "Hell bis Dunkel",
+    "palette.sort.saturated-to-muted": "Gesättigt bis Gedämpft",
+    "palette.sort.luminance": "Nach Helligkeit"
 }

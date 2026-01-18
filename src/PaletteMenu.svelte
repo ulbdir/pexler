@@ -2,7 +2,7 @@
     import { _ } from "svelte-i18n";
 
     import { Color } from "./lib/Color";
-    import { palette } from "./lib/Palette.svelte";
+    import { palette, sortPalette, type SortOrder } from "./lib/Palette.svelte";
     import ColorButton from "./ColorButton.svelte";
     import ChooseColorButton from "./ChooseColorButton.svelte";
     import Toast from "./lib/Toast.svelte";
@@ -41,6 +41,12 @@
         setTimeout(() => {
             showToast = false;
         }, 3000);
+    }
+
+    function sortAndClose(order: SortOrder) {
+        sortPalette(order);
+        closePaletteMenu();
+        triggerToast($_("palette.sorted"), 'success');
     }
 
     function handleSavePalette() {
@@ -226,7 +232,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </summary>
-                <ul class="menu dropdown-content bg-base-100 rounded-box z-50 w-40 p-2 shadow-lg border border-base-300">
+                <ul class="menu dropdown-content bg-base-100 rounded-box z-50 w-48 p-2 shadow-lg border border-base-300">
+                    <li class="menu-title">
+                        <span>{$_("palette.sort.title")}</span>
+                    </li>
+                    <li><button onclick={() => sortAndClose('hue')}>{$_("palette.sort.hue")}</button></li>
+                    <li><button onclick={() => sortAndClose('value')}>{$_("palette.sort.light-to-dark")}</button></li>
+                    <li><button onclick={() => sortAndClose('saturation')}>{$_("palette.sort.saturated-to-muted")}</button></li>
+                    <li><button onclick={() => sortAndClose('luminance')}>{$_("palette.sort.luminance")}</button></li>
+                    <div class="divider my-1"></div>
                     <li><button onclick={handleLoadPalette}>{$_("palette.load")}</button></li>
                     <li><button onclick={handleSavePalette}>{$_("palette.save")}</button></li>
                 </ul>

@@ -45,6 +45,40 @@ export function addColor(color: Color): void {
   }
 }
 
+export type SortOrder = 'hue' | 'value' | 'saturation' | 'luminance';
+
+export function sortPalette(order: SortOrder): void {
+  palette.sort((a, b) => {
+    const hsvA = a.toHsv();
+    const hsvB = b.toHsv();
+
+    switch (order) {
+      case 'hue':
+        if (Math.abs(hsvA.h - hsvB.h) > 0.001) return hsvA.h - hsvB.h;
+        if (Math.abs(hsvA.s - hsvB.s) > 0.001) return hsvA.s - hsvB.s;
+        return hsvA.v - hsvB.v;
+
+      case 'value':
+        if (Math.abs(hsvA.v - hsvB.v) > 0.001) return hsvB.v - hsvA.v;
+        if (Math.abs(hsvA.h - hsvB.h) > 0.001) return hsvB.h - hsvA.h;
+        return hsvB.s - hsvA.s;
+
+      case 'saturation':
+        if (Math.abs(hsvA.s - hsvB.s) > 0.001) return hsvB.s - hsvA.s;
+        if (Math.abs(hsvA.v - hsvB.v) > 0.001) return hsvB.v - hsvA.v;
+        return hsvA.h - hsvB.h;
+
+      case 'luminance':
+        const lumA = 0.299 * a.r + 0.587 * a.g + 0.114 * a.b;
+        const lumB = 0.299 * b.r + 0.587 * b.g + 0.114 * b.b;
+        return lumB - lumA;
+
+      default:
+        return 0;
+    }
+  });
+}
+
 export function saveToGpl(): string {
   let content = "GIMP Palette\n";
   content += "Channels: RGBA\n";
