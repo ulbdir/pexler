@@ -5,6 +5,7 @@
   import Menu from "./Menu.svelte";
   import LanguageChanger from "./LanguageChanger.svelte";
   import FileMenu from "./FileMenu.svelte";
+  import PaletteMenuTop from "./PaletteMenuTop.svelte";
   import { editorState } from "./lib/EditorState.svelte.js";
 
   let loading = $state(isLoading);
@@ -22,6 +23,7 @@
         </h1>
       </div>
       <FileMenu />
+      <PaletteMenuTop />
       <LanguageChanger />
     </div>
 
@@ -42,4 +44,5 @@
     </div>
   </div>
 </main>
+
 {/if}

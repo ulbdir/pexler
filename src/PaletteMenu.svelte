@@ -2,7 +2,7 @@
     import { _ } from "svelte-i18n";
 
     import { Color } from "./lib/Color";
-    import { palette } from "./lib/Palette";
+    import { palette } from "./lib/Palette.svelte";
     import ColorButton from "./ColorButton.svelte";
     import InlineColorPicker from "./InlineColorPicker.svelte";
 
@@ -27,12 +27,12 @@
 >
     <div class="flex-none w-full">
         <h2 class="card-title m-0 p-0">{$_("palette.card-title")}</h2>
-        <div class="w-full mt-2">
-            <InlineColorPicker color={editorState.drawingColor} {onColorChanged} />
+        <div class="w-full">
+            <ChooseColorButton startColor={editorState.drawingColor} {onColorChanged} />
         </div>
     </div>
     
-    <div class="flex-1 overflow-y-auto min-h-0 p-1 mt-2">
+    <div class="flex-1 overflow-y-auto min-h-0 p-1">
         <div class="flex flex-wrap gap-1 content-start">
             {#each palette as color, i}
                 <ColorButton
