@@ -37,5 +37,10 @@
     "palette.sort.hue": "Nach Farbton",
     "palette.sort.light-to-dark": "Hell bis Dunkel",
     "palette.sort.saturated-to-muted": "Gesättigt bis Gedämpft",
-    "palette.sort.luminance": "Nach Helligkeit"
+    "palette.sort.luminance": "Nach Helligkeit",
+    "palette.generate-from-image": "Aus Bild",
+    "palette.generated": "Palette mit {count} Farben erstellt",
+    "palette.clear": "Palette leeren",
+    "palette.cleared": "Palette geleert",
+    "palette.auto-add": "Farbe automatisch hinzufügen"
 }

@@ -1,6 +1,6 @@
 import type { Tool } from "./Tool";
 import { editorState } from "./EditorState.svelte";
-import { addColor } from "./Palette.svelte";
+import { addColor, getAutoAddColor } from "./Palette.svelte";
 
 export class DrawTool implements Tool {
 
@@ -29,8 +29,9 @@ export class DrawTool implements Tool {
     }
 
     onEndMove(x: number, y: number): void {
-        // Add the drawing color to the palette if not already present
-        addColor(editorState.drawingColor);
+        if (getAutoAddColor()) {
+            addColor(editorState.drawingColor);
+        }
     }
 
     onHover(x: number, y: number): boolean {

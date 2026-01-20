@@ -192,20 +192,3 @@ export function loadFromGpl(content: string): boolean {
   console.log(`Loaded ${colorCount} colors from GPL file`);
   return true;
 }
-
-export function triggerDownload(content: string, filename: string = "palette.gpl"): void {
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  
-  // Cleanup
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 0);
-}
