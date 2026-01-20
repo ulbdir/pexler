@@ -35,6 +35,16 @@ export const palette: Color[] = $state([
   new Color(128, 0, 128, 1),    // purple
 ]);
 
+const _autoAddColor: { value: boolean } = $state({ value: true });
+
+export function getAutoAddColor(): boolean {
+  return _autoAddColor.value;
+}
+
+export function toggleAutoAddColor(): void {
+  _autoAddColor.value = !_autoAddColor.value;
+}
+
 export function hasColor(color: Color): boolean {
   return palette.some(existingColor => existingColor.equals(color));
 }
@@ -43,6 +53,10 @@ export function addColor(color: Color): void {
   if (!hasColor(color)) {
     palette.push(color);
   }
+}
+
+export function clearPalette(): void {
+  palette.length = 0;
 }
 
 export type SortOrder = 'hue' | 'value' | 'saturation' | 'luminance';
@@ -79,28 +93,45 @@ export function sortPalette(order: SortOrder): void {
   });
 }
 
-export function saveToGpl(): string {
-  let content = "GIMP Palette\n";
-  content += "Channels: RGBA\n";
-  content += "Name: Pexler Palette\n";
-  content += "#\n";
-  
-  palette.forEach((color, index) => {
-    const r = Math.round(color.r);
-    const g = Math.round(color.g);
-    const b = Math.round(color.b);
-    const a = Math.round(color.a * 255);
-    const name = `Color ${index + 1}`;
-    content += `${r.toString().padStart(3)} ${g.toString().padStart(3)} ${b.toString().padStart(3)} ${a.toString().padStart(3)} ${name}\n`;
-  });
-  
-  return content;
+export function generatePaletteFromImage(imageCanvas: HTMLCanvasElement): number {
+  const ctx = imageCanvas.getContext('2d');
+  if (!ctx) {
+    console.error('Failed to get canvas context');
+    return 0;
+  }
+
+  const imageData = ctx.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+  const data = imageData.data;
+  const colorSet = new Set<string>();
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const a = data[i + 3];
+
+    if (a < 10) continue;
+
+    const key = `${r},${g},${b},${Math.round(a)}`;
+    colorSet.add(key);
+  }
+
+  const newColors: Color[] = [];
+  for (const key of colorSet) {
+    const [r, g, b, a] = key.split(',').map(Number);
+    newColors.push(new Color(r, g, b, a / 255));
+  }
+
+  palette.length = 0;
+  palette.push(...newColors);
+
+  console.log(`Generated palette with ${newColors.length} colors from image`);
+  return newColors.length;
 }
 
 export function loadFromGpl(content: string): boolean {
   const lines = content.split('\n').map(line => line.trim()).filter(line => line);
   
-  // Check header
   if (!lines.length || !lines[0].startsWith('GIMP Palette')) {
     console.error('Invalid GPL file: Missing GIMP Palette header');
     return false;
@@ -109,7 +140,6 @@ export function loadFromGpl(content: string): boolean {
   let hasRGBA = false;
   let startIndex = 1;
   
-  // Check for RGBA channels
   for (let i = 1; i < Math.min(5, lines.length); i++) {
     if (lines[i].startsWith('Channels: RGBA')) {
       hasRGBA = true;
@@ -127,10 +157,8 @@ export function loadFromGpl(content: string): boolean {
   for (let i = startIndex; i < lines.length; i++) {
     const line = lines[i];
     
-    // Skip comments and empty lines
     if (line.startsWith('#') || !line) continue;
     
-    // Parse color line: r g b [a] [name]
     const parts = line.split(/\s+/).filter(part => part);
     if (parts.length < 3) continue;
     
@@ -139,7 +167,7 @@ export function loadFromGpl(content: string): boolean {
       const g = Math.max(0, Math.min(255, parseInt(parts[1])));
       const b = Math.max(0, Math.min(255, parseInt(parts[2])));
       
-      let a = 1.0; // Default alpha
+      let a = 1.0;
       if (hasRGBA && parts.length >= 4) {
         a = Math.max(0, Math.min(255, parseInt(parts[3]))) / 255;
       }
@@ -158,7 +186,6 @@ export function loadFromGpl(content: string): boolean {
     return false;
   }
   
-  // Replace palette with loaded colors
   palette.length = 0;
   palette.push(...newColors);
   

@@ -28,6 +28,8 @@
     "palette.loaded": "Palette loaded",
     "palette.error.load": "Failed to load palette",
     "palette.error.invalid": "Invalid palette file",
+    "palette.error.save": "Failed to save palette",
+    "palette.error.read": "Failed to read file",
     "palette.sorted": "Palette sorted",
     "palette.sort.title": "Sort",
     "palette.sort.hue": "By Hue",

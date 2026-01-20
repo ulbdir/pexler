@@ -30,6 +30,8 @@
     "palette.loaded": "Palette geladen",
     "palette.error.load": "Palette konnte nicht geladen werden",
     "palette.error.invalid": "Ungültige Palette-Datei",
+    "palette.error.save": "Palette konnte nicht gespeichert werden",
+    "palette.error.read": "Datei konnte nicht gelesen werden",
     "palette.sorted": "Palette sortiert",
     "palette.sort.title": "Sortieren",
     "palette.sort.hue": "Nach Farbton",
