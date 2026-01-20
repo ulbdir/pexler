@@ -43,7 +43,7 @@
     }
 </script>
 
-<div class="tooltip" data-tip={startColor.toHex()}>
+<div class="tooltip w-full" data-tip={startColor.toHex()}>
     <button
         class="btn w-full"
         bind:this={buttonRef}

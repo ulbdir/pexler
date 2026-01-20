@@ -21,5 +21,19 @@
     "file-menu.new.width": "Width in pixel",
     "file-menu.new.height": "Height in pixel",
     "file-menu.load": "Load image",
-    "file-menu.save": "Save image"
+    "file-menu.save": "Save image",
+    "palette.save": "Save Palette",
+    "palette.load": "Load Palette",
+    "palette.saved": "Palette saved",
+    "palette.loaded": "Palette loaded",
+    "palette.error.load": "Failed to load palette",
+    "palette.error.invalid": "Invalid palette file",
+    "palette.error.save": "Failed to save palette",
+    "palette.error.read": "Failed to read file",
+    "palette.sorted": "Palette sorted",
+    "palette.sort.title": "Sort",
+    "palette.sort.hue": "By Hue",
+    "palette.sort.light-to-dark": "Light to Dark",
+    "palette.sort.saturated-to-muted": "Saturated to Muted",
+    "palette.sort.luminance": "By Brightness"
 }
