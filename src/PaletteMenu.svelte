@@ -5,6 +5,7 @@
     import { palette } from "./lib/Palette.svelte";
     import ColorButton from "./ColorButton.svelte";
     import InlineColorPicker from "./InlineColorPicker.svelte";
+    import ChooseColorButton from "./ChooseColorButton.svelte";
 
     import { editorState } from "./lib/EditorState.svelte"
     
