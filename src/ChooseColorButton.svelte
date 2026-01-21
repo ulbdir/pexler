@@ -11,6 +11,8 @@
     let popupStyle: string = $state("");
     let chosenColor: Color = startColor;
 
+    $effect(() => chosenColor = startColor);
+
     function handleColorChange(e: Color) {
         chosenColor = e;
     }
@@ -36,8 +38,7 @@
             open = false;
             window.removeEventListener("mousedown", handleClickOutside);
 
-            startColor = chosenColor;
-            onColorChanged(startColor);
+            onColorChanged(chosenColor);
             event.preventDefault();
         }
     }

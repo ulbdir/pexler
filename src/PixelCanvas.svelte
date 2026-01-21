@@ -16,7 +16,6 @@
 
     let pixelSize: number = $state(20);
 
-    // Reaktive Abhängigkeiten
     let canvasWidth = $derived(pixels.width * pixelSize);
     let canvasHeight = $derived(pixels.height * pixelSize);
 
@@ -31,17 +30,12 @@
     let offset = $state({ x: 0, y: 0 });
     let isPanning = false;
 
-    // Beim Mounten des Canvas das Rendering starten
     $effect(() => {
         ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
         draw();
-        return () => {
-            // Cleanup, wenn nötig
-        };
     });
 
-    // Neuzeichnen bei Änderungen
     $effect(() => {
         if (
             ctx &&
@@ -59,7 +53,6 @@
         }
     });
 
-    // reset zoom and pan when the image changes
     $effect(()=>{
         if(pixels) {
             pixelSize = 20;
@@ -68,15 +61,12 @@
         }
     })
 
-    // Hauptzeichenfunktion
     function draw() {
         if (!ctx) return;
 
-        // Canvas-Größe aktualisieren
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
 
-        // Hintergrund zeichnen
         ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -129,16 +119,17 @@
             lastX = event.clientX;
             lastY = event.clientY;
             event.preventDefault();
-        } else {
-            isDrawing = true;
-            isHovering = false;
-            const { x, y } = getPixelCoordinates(event);
+            return;
+        }
 
-            const tool = editorState.tool;
-            if (tool !== undefined) {
-                tool.onStartMove(x, y);
-                tool.onMove(x, y);
-            }
+        isDrawing = true;
+        isHovering = false;
+        const { x, y } = getPixelCoordinates(event);
+
+        const tool = editorState.tool;
+        if (tool !== undefined) {
+            tool.onStartMove(x, y);
+            tool.onMove(x, y);
         }
     }
 
@@ -150,21 +141,20 @@
             offset.y += dy;
             lastX = event.clientX;
             lastY = event.clientY;
-        } else {
-            const { x, y } = getPixelCoordinates(event);
+            return;
+        }
 
-            const tool = editorState.tool;
-            if (tool !== undefined) {
-                if (isDrawing) {
-                    tool.onMove(x, y);
-                    draw();
-                } else {
-                    const redraw = tool.onHover(x, y);
-                    if (redraw) {
-                        draw();
-                    }
-                }
-            }
+        const { x, y } = getPixelCoordinates(event);
+
+        const tool = editorState.tool;
+        if (tool === undefined) return;
+
+        if (isDrawing) {
+            tool.onMove(x, y);
+            draw();
+        } else {
+            const redraw = tool.onHover(x, y);
+            if (redraw) draw();
         }
     }
 
@@ -208,11 +198,9 @@
         if (zoomDirection > 0) {
             newPixelSize = pixelSize * zoomFactor;
         } else {
-            //newPixelSize = Math.round(Math.max(0.1, pixelSize / zoomFactor));
             newPixelSize = pixelSize / zoomFactor;
         }
 
-        // Pixelgröße aktualisieren
         pixelSize = newPixelSize;
     }
 </script>

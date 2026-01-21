@@ -113,7 +113,6 @@
     ctx.lineTo(baseX2, baseY2);
     ctx.closePath();
 
-    //ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.fillStyle = "white";
     ctx.lineWidth = 2;
     ctx.fill();
@@ -208,7 +207,6 @@
   }
 
   function onHexChanged(valueText: string) {
-    console.log("onHexChanged: " + valueText);
     const c: Color = Color.fromHex(valueText);
     startColor = c;
   }

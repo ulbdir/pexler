@@ -1,17 +1,15 @@
 <script>
   import { onMount } from 'svelte';
-  
-  // Props
+
   export let title = "Fenster";
   export let initialWidth = 400;
   export let initialHeight = 300;
   export let initialX = 100;
   export let initialY = 100;
   export let minWidth = 200;
-  export let minHeight = 100;
-  
-  // State
-  let windowElement;
+   export let minHeight = 100;
+
+   let windowElement;
   let width = initialWidth;
   let height = initialHeight;
   let x = initialX;
@@ -23,31 +21,25 @@
   let initialWindowX;
   let initialWindowY;
   let initialWindowWidth;
-  let initialWindowHeight;
-  
-  // Funktion zum Starten des Drag-Vorgangs für die Titelleiste
-  function startDrag(event) {
+   let initialWindowHeight;
+
+   function startDrag(event) {
     isDragging = true;
     dragStartX = event.clientX;
     dragStartY = event.clientY;
     initialWindowX = x;
     initialWindowY = y;
-    
-    console.log(initialWindowX, dragStartX)
 
-    // Verhindern des Standardverhaltens und Textauswahl während des Drag-Vorgangs
     event.preventDefault();
-  }
-  
-  // Funktion zum Starten des Resize-Vorgangs
-  function startResize(event) {
+   }
+
+   function startResize(event) {
     isResizing = true;
     dragStartX = event.clientX;
     dragStartY = event.clientY;
     initialWindowWidth = width;
     initialWindowHeight = height;
-    
-    // Verhindern des Standardverhaltens
+
     event.preventDefault();
   }
   

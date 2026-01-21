@@ -12,13 +12,11 @@
     function handleColorClick(event, index) {
         if (event.button === 0) {
             editorState.drawingColor = palette[index];
-            console.dir($state.snapshot(editorState.drawingColor));
         }
     }
 
     function onColorChanged(color: Color) {
         editorState.drawingColor = color;
-        console.dir($state.snapshot(editorState.drawingColor));
     }
 </script>
 
